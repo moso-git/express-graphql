@@ -92,6 +92,11 @@ export type OptionsData = {
    * A boolean to optionally enable GraphiQL mode.
    */
   graphiql?: ?boolean,
+  
+  /*
+   * Optional fieldResolver
+   */ 
+  fieldResolver?: ?any,
 };
 
 /**
@@ -176,6 +181,7 @@ function graphqlHTTP(options: Options): Middleware {
         const context = optionsData.context || request;
         const rootValue = optionsData.rootValue;
         const graphiql = optionsData.graphiql;
+        const fieldResolver = optionsData.fieldResolver;
         pretty = optionsData.pretty;
         formatErrorFn = optionsData.formatError;
         extensionsFn = optionsData.extensions;
@@ -256,6 +262,7 @@ function graphqlHTTP(options: Options): Middleware {
             context,
             variables,
             operationName,
+            fieldResolver,
           );
         } catch (contextError) {
           // Return 400: Bad Request if any execution context errors exist.
